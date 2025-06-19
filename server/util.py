@@ -1,5 +1,6 @@
 import json,pickle
 import numpy as np
+import os
 
 __locations = None
 __data_columns = None
@@ -21,7 +22,14 @@ def get_estimated_price(location, sqft, bhk, bath):
     return round(__model.predict([x])[0], 2)
 
 def get_location_names():
-    return __locations
+    try:
+        file_path = os.path.join(os.path.dirname(__file__), 'artifacts/columns.json')
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            return data['data_columns'][3:]
+    except Exception as e:
+        print("Error loading locations:", e)
+        return []
 
 def load_saved_artifacts():
     print('Loading Saved Artifacts Started . . . ')
