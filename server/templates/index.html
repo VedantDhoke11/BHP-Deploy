@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🏠 House Price Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text: #2c3e50;
+            --input-bg: #ffffff;
+            --highlight: #6c5ce7;
+            --bubble: rgba(120, 90, 160, 0.3);
+        }
+
+        body.dark-mode {
+            --bg: #0f1117;
+            --card-bg: #1e212d;
+            --text: #f5f5f5;
+            --input-bg: #2c2f3a;
+            --highlight: #a29bfe;
+            --bubble: rgba(220, 220, 220, 0.12);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background-color: var(--bubble);
+            border-radius: 50%;
+            animation: rise 20s infinite ease-in;
+            filter: blur(1px);
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-110vh); opacity: 0; }
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 550px;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--text);
+        }
+
+        .form-label i {
+            margin-right: 8px;
+            color: var(--highlight);
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            background: var(--input-bg);
+            color: var(--text);
+            border: 1px solid #ccc;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 10px var(--highlight);
+            border-color: var(--highlight);
+        }
+
+        .btn-custom {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 14px;
+            padding: 12px;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(to right, #5f27cd, #0984e3);
+            box-shadow: 0 10px 24px rgba(108, 92, 231, 0.7);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            background-color: #d1f2eb;
+            color: #145a32;
+            padding: 15px 20px;
+            border-left: 6px solid #1abc9c;
+            border-radius: 14px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .result-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(26, 188, 156, 0.4);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Bubbles -->
+<div class="bubbles">
+    <div class="bubble" style="width: 40px; height: 40px; left: 10%; animation-duration: 20s;"></div>
+    <div class="bubble" style="width: 60px; height: 60px; left: 25%; animation-duration: 25s;"></div>
+    <div class="bubble" style="width: 30px; height: 30px; left: 40%; animation-duration: 18s;"></div>
+    <div class="bubble" style="width: 70px; height: 70px; left: 55%; animation-duration: 22s;"></div>
+    <div class="bubble" style="width: 50px; height: 50px; left: 70%; animation-duration: 20s;"></div>
+</div>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <label class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="themeToggle">
+        <span class="ms-2" id="themeLabel">☀️</span>
+    </label>
+</div>
+
+<!-- Main Card -->
+<div class="card" data-aos="fade-up">
+    <div class="title">🏠 House Price Predictor For Bengaluru</div>
+
+    <form method="POST" action="/">
+        <div class="mb-3">
+            <label class="form-label"><i class="fas fa-location-dot"></i>Location</label>
+            <select name="location" class="form-select" required>
+                {% for loc in locations %}
+                    <option value="{{ loc }}" {% if request.form.location == loc %}selected{% endif %}>{{ loc }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><i class="fas fa-ruler-combined"></i>Total Square Feet</label>
+            <input type="number" name="sqft" step="any" class="form-control" required value="{{ request.form.sqft or '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><i class="fas fa-house-user"></i>BHK</label>
+            <input type="number" name="bhk" class="form-control" required value="{{ request.form.bhk or '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><i class="fas fa-bath"></i>Bath</label>
+            <input type="number" name="bath" class="form-control" required value="{{ request.form.bath or '' }}">
+        </div>
+
+        <button type="submit" class="btn btn-custom w-100">Predict Price</button>
+    </form>
+
+    {% if prediction_text %}
+    <div class="result-box mt-4" data-aos="zoom-in" data-aos-duration="800">
+        {{ prediction_text }}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+</script>
+
+<!-- Dark Mode Script -->
+<script>
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeLabel');
+
+    function setTheme(dark) {
+        if (dark) {
+            document.body.classList.add('dark-mode');
+            toggle.checked = true;
+            label.textContent = '🌙';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-mode');
+            toggle.checked = false;
+            label.textContent = '☀️';
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    toggle.addEventListener('change', () => {
+        setTheme(toggle.checked);
+    });
+
+    const savedTheme = localStorage.getItem('theme');
+    setTheme(savedTheme === 'dark');
+</script>
+
+</body>
+</html>
