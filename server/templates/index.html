@@ -206,19 +206,11 @@
         <button type="submit" class="btn btn-custom w-100">Predict Price</button>
     </form>
 
-    <script>
-    if ("{{ prediction_text }}") {
-        window.onload = function () {
-            document.querySelector('.result-box')?.scrollIntoView({ behavior: 'smooth' });
-        };
-    }
-    </script>
-
     {% if prediction_text %}
     <div class="result-box mt-4" data-aos="zoom-in" data-aos-duration="800">
         {{ prediction_text }}
     </div>
-    {% endif %} 
+    {% endif %}
 </div>
 
 <!-- Scripts -->
