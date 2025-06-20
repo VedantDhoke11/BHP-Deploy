@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, render_template
 from server import util
 app = Flask(__name__)
 
+util.load_saved_artifacts()
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -39,6 +41,4 @@ def get_location_names():
 #     return render_template('index.html',  prediction_text = f"Estimated Price : Rs. {estimated_price:,.2f} Lakh.")
 
 if __name__ == '__main__' : 
-    
-    util.load_saved_artifacts()
     app.run(debug = True)
