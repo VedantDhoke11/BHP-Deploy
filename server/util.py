@@ -37,12 +37,16 @@ def load_saved_artifacts():
     global __data_columns
     global __model
     
-    with open ('C:/Users/Administrator/Desktop/Deep LearNNN/Machine Learning Startttttttt/First ML Project/BHP/server/artifacts/columns.json', 'r') as f:
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, "artifacts", "columns.json")
+
+    with open(file_path, 'r') as f:
         __data_columns = json.load(f)['data_columns']
         __locations = __data_columns[3:]
 
 
-    with open('C:/Users/Administrator/Desktop/Deep LearNNN/Machine Learning Startttttttt/First ML Project/BHP/server/artifacts/Bengaluru_Home_Prices_Model.pickle', 'rb') as f:
+    model_path = os.path.join(os.path.dirname(__file__), "artifacts", "Bengaluru_Home_Prices_Model.pickle")
+    with open(model_path, 'rb') as f:
         __model = pickle.load(f)
     
     print("Loading Artifacts Done . . .")
