@@ -178,6 +178,13 @@
 <div class="card" data-aos="fade-up">
     <div class="title">🏠 House Price Predictor For Bengaluru</div>
 
+    {% if prediction_text %}
+    <div class="result-box mb-4" data-aos="zoom-in" data-aos-duration="800">
+        {{ prediction_text }}
+    </div>
+    {% endif %}
+
+
     <form method="POST" action="/">
         <div class="mb-3">
             <label class="form-label"><i class="fas fa-location-dot"></i>Location</label>
@@ -206,11 +213,11 @@
         <button type="submit" class="btn btn-custom w-100">Predict Price</button>
     </form>
 
-    {% if prediction_text %}
+    {% comment %} {% if prediction_text %}
     <div class="result-box mt-4" data-aos="zoom-in" data-aos-duration="800">
         {{ prediction_text }}
     </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
 </div>
 
 <!-- Scripts -->
