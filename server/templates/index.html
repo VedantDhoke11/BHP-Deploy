@@ -42,12 +42,12 @@
         color: var(--text);
         min-height: 100vh;
         margin: 0;
-        padding: 80px 20px 40px;
-        overflow-x: hidden;
+        padding: 60px 20px 40px;
         overflow-y: auto;
+        overflow-x: hidden;
         transition: background 0.4s ease, color 0.4s ease;
-        position: relative;
-        }
+        display: block;
+    }
 
 
         .bubbles {
@@ -153,17 +153,6 @@
         right: 30px;
         z-index: 9999;
         }
-
-        .main-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        z-index: 1;
-        position: relative;
-        width: 100%;
-        }
-
     </style>
 </head>
 <body>
@@ -177,21 +166,17 @@
     <div class="bubble" style="width: 50px; height: 50px; left: 70%; animation-duration: 20s;"></div>
 </div>
 
-<div class="main-wrapper">
-
-    <!-- Theme Toggle -->
-    <div class="theme-toggle">
-        <label class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="themeToggle">
-            <span class="ms-2" id="themeLabel">☀️</span>
-        </label>
-    </div>
-
-    <!-- Main Card -->
-    <div class="card" data-aos="fade-up">
-        <div class="title">🏠 House Price Predictor For Bengaluru</div>
-
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <label class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="themeToggle">
+        <span class="ms-2" id="themeLabel">☀️</span>
+    </label>
 </div>
+
+<!-- Main Card -->
+<div class="card" data-aos="fade-up">
+    <div class="title">🏠 House Price Predictor For Bengaluru</div>
 
     <form method="POST" action="/">
         <div class="mb-3">
